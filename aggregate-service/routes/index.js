@@ -5,6 +5,8 @@ const request = require('request');
 
 const router = Router();
 
+const SERVICE_URLS = require('../constants');
+
 router.get('/orderdetails/:id', async (req, res) => {
 
     try {
@@ -26,6 +28,7 @@ router.get('/orderdetails/:id', async (req, res) => {
 
     } catch (error) {
         console.log(error);
+        res.status(500).send(error);
     }
 
 });
@@ -35,7 +38,7 @@ const getUserDetails = (id) => {
      // Return new promise
   return new Promise(function(resolve, reject) {
     // Do async job
-    let userUrl = `http://${process.env.USER_SERVICE_URL}/users/${id}`;
+    let userUrl = `http://${SERVICE_URLS.USER_SERVICE_URL}/users/${id}`;
     request.get(userUrl, function(err, resp, body) {
       if (err) {
         reject(err);
@@ -50,7 +53,7 @@ const getOrderDetails = (id) => {
     // Return new promise
  return new Promise(function(resolve, reject) {
    // Do async job
-   let orderUrl = `http://${process.env.ORDER_SERVICE_URL}/orders/${id}`;
+   let orderUrl = `http://${SERVICE_URLS.ORDER_SERVICE_URL}/orders/${id}`;
    request.get(orderUrl, function(err, resp, body) {
      if (err) {
        reject(err);
