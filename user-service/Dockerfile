@@ -4,4 +4,4 @@ COPY package.json /user-service
 RUN npm install
 COPY . /user-service
 CMD ["node","index.js"]
-EXPOSE 9003
+EXPOSE 9000

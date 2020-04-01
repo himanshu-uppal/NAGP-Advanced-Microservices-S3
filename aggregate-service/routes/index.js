@@ -3,7 +3,9 @@ const {
 } = require('express');
 const request = require('request');
 
-const router = Router()
+const router = Router();
+
+const SERVICE_URLS = require('../constants');
 
 router.get('/orderdetails/:id', async (req, res) => {
 
@@ -35,7 +37,8 @@ const getUserDetails = (id) => {
      // Return new promise
   return new Promise(function(resolve, reject) {
     // Do async job
-    request.get(`http://localhost:9003/users/${id}`, function(err, resp, body) {
+    let userUrl = `http://${SERVICE_URLS.USER_SERVICE_URL}/users/${id}`;
+    request.get(userUrl, function(err, resp, body) {
       if (err) {
         reject(err);
       } else {
@@ -49,7 +52,8 @@ const getOrderDetails = (id) => {
     // Return new promise
  return new Promise(function(resolve, reject) {
    // Do async job
-   request.get(`http://localhost:9002/orders/${id}`, function(err, resp, body) {
+   let orderUrl = `http://${SERVICE_URLS.ORDER_SERVICE_URL}/orders/${id}`;
+   request.get(orderUrl, function(err, resp, body) {
      if (err) {
        reject(err);
      } else {

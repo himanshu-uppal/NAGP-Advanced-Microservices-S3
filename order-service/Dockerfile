@@ -4,4 +4,4 @@ COPY package.json /order-service
 RUN npm install
 COPY . /order-service
 CMD ["node","index.js"]
-EXPOSE 9002
+EXPOSE 9000

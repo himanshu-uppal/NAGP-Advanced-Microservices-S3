@@ -4,4 +4,4 @@ COPY package.json /aggregate-service
 RUN npm install
 COPY . /aggregate-service
 CMD ["node","index.js"]
-EXPOSE 9001
+EXPOSE 9000
