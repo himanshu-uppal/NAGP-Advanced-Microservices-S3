@@ -19,7 +19,7 @@ router.get('/orderdetails/:id', async (req, res) => {
 
         let responseData ={
             "userDetails": JSON.parse(userDetails),
-            "orders": JSON.parse(orderDetails)
+            "orders": JSON.parse(orderDetails).orders
           };            
 
         res.status(200).send(responseData);
