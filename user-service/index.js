@@ -1,7 +1,11 @@
 const express = require('express')
 const cors = require('cors')
 
-const app = express()
+const app = express();
+const {
+    db,
+    User
+} = require('./models/index');
 app.use(express.json())
 app.use(express.urlencoded({
     extended: true
@@ -17,11 +21,24 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use('/', require('./routes')); 
+app.use('/', require('./routes'));
 
 const PORT = 9000;
 
 
-app.listen(PORT, () => {
-    console.log(`Server started at http://localhost:${PORT}`)
-});
+db.sync().then(() => {
+    console.log('Database Synced');
+
+    app.listen(PORT, () => {
+        console.log(`Server started at http://localhost:${PORT}`);
+
+        User.bulkCreate([{
+            name: "John",
+            email: "john.doe@google.com",
+            age: 23
+        }]).then((users) => {
+            console.log("Users created");
+        });
+
+    });
+}).catch(console.error)

@@ -2,7 +2,10 @@ const {
     Router
 } = require('express')
 
-const router = Router()
+const router = Router();
+const {
+    User
+} = require('../models/index');
 
 router.get('/users/:userId', async (req, res) => {
 
@@ -11,16 +14,25 @@ router.get('/users/:userId', async (req, res) => {
             userId
         } = req.params;
 
+        let userIdInt = parseInt(userId);
+
+        let user = await User.findByPk(userIdInt);
+
+        if (!user) {
+            return res.sendStatus(404);
+        }
+
         let responseData = {
-            "name": "John",
-            "age": "23",
-            "email": "john.doe@google.com"
+            name: user.name,
+            age: user.age,
+            email: user.email
         };
 
-        res.status(200).send(responseData);
+        return res.status(200).send(responseData);
 
     } catch (error) {
         console.log(error);
+        return res.sendStatus(500);
     }
 
 });
