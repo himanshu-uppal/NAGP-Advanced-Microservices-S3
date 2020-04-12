@@ -8,9 +8,9 @@ const db = new Sequelize({
     username: 'root',
     database: 'nagpmicroservices',
     password: 'root',
-    host: 'localhost',
+    host: process.env.DB_SERVICE_URL || '35.223.40.69',
     port: 3306
-})
+});
 
 // User Model 
 const User = db.define('user', user)

@@ -25,6 +25,8 @@ app.use('/', require('./routes'));
 
 const PORT = 9000;
 
+console.log(process.env.DB_USERNAME);
+console.log(process.env.DB_PASSWORD);
 
 db.sync().then(() => {
     console.log('Database Synced');
