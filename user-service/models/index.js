@@ -5,10 +5,10 @@ const {
 
 const db = new Sequelize({
     dialect: 'mysql',
-    username: 'root',
+    username: process.env.DB_USERNAME,
     database: 'nagpmicroservices',
-    password: 'root',
-    host: process.env.DB_SERVICE_URL || '35.223.40.69',
+    password: process.env.DB_PASSWORD,
+    host: process.env.DB_SERVICE_URL,
     port: 3306
 });
 

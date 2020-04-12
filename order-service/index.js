@@ -20,7 +20,7 @@ app.use(function (req, res, next) {
 
 app.use('/', require('./routes')); 
 
-const PORT = 9001;
+const PORT = 9000;
 
 
 app.listen(PORT, () => {

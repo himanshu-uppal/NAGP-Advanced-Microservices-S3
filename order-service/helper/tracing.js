@@ -2,6 +2,8 @@ const {
     initTracer: initJaegerTracer
 } = require("jaeger-client");
 
+let jaegerCollectorUrl = process.env.JAEGER_COLLECTOR_URL || '34.67.53.121' ; 
+
 module.exports.initTracer = serviceName => {
     const config = {
         serviceName: serviceName,
@@ -11,7 +13,7 @@ module.exports.initTracer = serviceName => {
         },
         reporter: {
             logSpans: true,
-            collectorEndpoint: "http://34.67.53.121:14268/api/traces"
+            collectorEndpoint: `http://${jaegerCollectorUrl}:14268/api/traces`
         },
     };
     const options = {
