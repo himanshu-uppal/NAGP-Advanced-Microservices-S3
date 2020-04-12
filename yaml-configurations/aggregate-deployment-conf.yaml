@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: aggregate-service-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aggregate-service
+  template:
+    metadata:
+      labels:
+        app: aggregate-service
+    spec:
+      containers:
+      - name: aggrgate-service-container
+        image: himanshuuppal/aggregate-service:assignment2
+        env:
+        - name: USER_SERVICE_URL
+          value: user-service-deployment.default.svc.cluster.local
+        - name: ORDER_SERVICE_URL
+          value: order-service-deployment.default.svc.cluster.local
+        - name: JAEGER_COLLECTOR_URL
+          value: jaeger-collector.default.svc.cluster.local
+        ports:
+        - containerPort: 9000 

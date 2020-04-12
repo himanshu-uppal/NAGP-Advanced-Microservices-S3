@@ -1,0 +1,34 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: user-service-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+      - name: user-service-container
+        image: himanshuuppal/user-service:assignment2
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: dbcredentials     
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: username
+              name: dbcredentials 
+        - name: JAEGER_COLLECTOR_URL
+          value: jaeger-collector.default.svc.cluster.local
+        - name: DB_SERVICE_URL
+          value: 35.223.40.69
+        ports:
+        - containerPort: 9000 

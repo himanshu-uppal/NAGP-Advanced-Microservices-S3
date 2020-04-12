@@ -1,0 +1,44 @@
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: mysql
+  labels: 
+    app: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - image: mysql:8
+        name: mysql
+        args:
+          - "--default-authentication-plugin=mysql_native_password"    
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: dbcredentials     
+        - name: MYSQL_ROOT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: username
+              name: dbcredentials  
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysqlpersistentvolume
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysqlpersistentvolume
+        persistentVolumeClaim:
+          claimName: mysqlpvclaim
